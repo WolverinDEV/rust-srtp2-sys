@@ -1,0 +1,15 @@
+[package]
+name = "rust-srtp2-sys"
+version = "0.1.0"
+authors = ["WolverinDEV <git@did.science>"]
+edition = "2018"
+links = "srtp2"
+build = "build.rs"
+
+description = "Binding for libsrtp2 (Unix and Windows compatible)"
+keywords = ["srtp", "srtp2", "webrtc"]
+categories = ["multimedia", "network-programming"]
+license = "BSD-3-Clause"
+
+[build-dependencies]
+bindgen = "0.55.1"
