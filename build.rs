@@ -8,6 +8,7 @@ fn main() {
     let output_path = out_dir.join("srtp");
     let source_path = env::current_dir().unwrap().join("libsrtp");
 
+    /*
     if !output_path.join("bindings.rs").exists() {
         build(&source_path, &build_path, &output_path);
 
@@ -22,6 +23,7 @@ fn main() {
             .write_to_file(output_path.join("bindings.rs"))
             .expect("failed to write bindings");
     }
+     */
 
     println!("cargo:rustc-link-lib=srtp2");
     println!("cargo:rustc-link-search=native={}", output_path.join("lib").to_string_lossy());
