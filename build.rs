@@ -8,9 +8,7 @@ fn main() {
     let output_path = out_dir.join("srtp");
     let source_path = env::current_dir().unwrap().join("libsrtp");
 
-    if !output_path.exists() {
-        build(&source_path, &build_path, &output_path);
-    }
+    build(&source_path, &build_path, &output_path);
     /*
     if !output_path.join("bindings.rs").exists() {
         let bindings = bindgen::Builder::default()
@@ -37,6 +35,7 @@ fn main() {
     }
 
     println!("cargo:rustc-link-lib=srtp2");
+    println!("cargo:rerun-if-env-changed=srtp2_build_type");
 }
 
 fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
@@ -52,6 +51,13 @@ fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
         command.arg(&output_path);
         command.arg(&build_path);
         command.arg(&source_path);
+        let value = env::var("srtp2_build_type").unwrap_or(String::new());
+        match value.as_str() {
+            "static" => { command.arg("-Ddefault_library=static"); },
+            "shared" => { command.arg("-Ddefault_library=shared"); },
+            "" => {  },
+            _ => panic!("Invalid build type: {:?}", value)
+        };
 
         let result = command.spawn().expect("failed to launch meson command")
             .wait_with_output().expect("failed to await meson output");
