@@ -8,10 +8,11 @@ fn main() {
     let output_path = out_dir.join("srtp");
     let source_path = env::current_dir().unwrap().join("libsrtp");
 
+    if !output_path.exists() {
+        build(&source_path, &build_path, &output_path);
+    }
     /*
     if !output_path.join("bindings.rs").exists() {
-        build(&source_path, &build_path, &output_path);
-
         let bindings = bindgen::Builder::default()
             .header_contents("wrapper.h", &String::from("#include <srtp2/cipher.h>"))
             .clang_args(vec![format!("-I{}", output_path.join("include").to_string_lossy())])
@@ -30,6 +31,9 @@ fn main() {
 }
 
 fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
+    if build_path.exists() {
+        std::fs::remove_dir_all(build_path).unwrap();
+    }
     /* setup */
     {
         let mut command = Command::new("meson");
