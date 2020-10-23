@@ -42,6 +42,10 @@ fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
     if build_path.exists() {
         std::fs::remove_dir_all(build_path).unwrap();
     }
+    if output_path.exists() {
+        std::fs::remove_dir_all(output_path).unwrap();
+    }
+
     /* setup */
     {
         let mut command = Command::new("meson");
