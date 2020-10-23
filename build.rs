@@ -25,9 +25,18 @@ fn main() {
             .expect("failed to write bindings");
     }
      */
+    if cfg!(windows) {
+        println!("cargo:rustc-link-search=native={}", output_path.join("lib").to_string_lossy());
+    } else {
+        let triplet = Command::new("gcc")
+            .arg("-dumpmachine")
+            .output().expect("failed to get host triplet")
+            .stdout;
+        let triplet = String::from_utf8(triplet).expect("invalid host triplet format");
+        println!("cargo:rustc-link-search=native={}", output_path.join("lib").join(triplet).to_string_lossy());
+    }
 
     println!("cargo:rustc-link-lib=srtp2");
-    println!("cargo:rustc-link-search=native={}", output_path.join("lib").to_string_lossy());
 }
 
 fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
