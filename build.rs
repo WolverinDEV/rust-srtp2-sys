@@ -35,7 +35,7 @@ fn main() {
     }
 
     println!("cargo:rustc-link-lib=srtp2");
-    println!("cargo:rerun-if-env-changed=srtp2_build_type");
+    //println!("cargo:rerun-if-env-changed=srtp2_build_type");
 }
 
 fn build(source_path: &PathBuf, build_path: &PathBuf, output_path: &PathBuf) {
