@@ -32,6 +32,7 @@ fn main() {
             .stdout;
         let triplet = String::from_utf8(triplet).expect("invalid host triplet format");
         println!("cargo:rustc-link-search=native={}", output_path.join("lib").join(triplet).to_string_lossy());
+        println!("cargo:rustc-link-search=native={}", output_path.join("lib").to_string_lossy());
     }
 
     println!("cargo:rustc-link-lib=srtp2");
