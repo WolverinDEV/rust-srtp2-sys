@@ -3,6 +3,13 @@ use std::env;
 use std::process::Command;
 
 fn main() {
+    if let Ok(library) = pkg_config::Config::new()
+        .atleast_version("2.4.0")
+        .probe("libsrtp2") {
+        println!("Found libsrtp2 via pkg config");
+        return;
+    }
+
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let build_path = out_dir.join("srtp_build");
     let output_path = out_dir.join("srtp");
