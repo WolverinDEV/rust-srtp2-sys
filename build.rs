@@ -4,12 +4,14 @@ use std::process::Command;
 use build_utils::build::LibraryType;
 
 fn main() {
+    /*
     if let Ok(_library) = pkg_config::Config::new()
         .atleast_version("2.4.0")
         .probe("libsrtp2") {
         println!("Found libsrtp2 via pkg config");
         return;
     }
+    */
 
     let source = build_utils::source::BuildSourceGit::builder("https://github.com/cisco/libsrtp.git".to_owned())
         .revision(Some("7d351de".to_string()))
