@@ -50,7 +50,7 @@ fn main() {
               */
         },
         Err(error) => {
-            println!(error.pretty_format());
+            println!("{}", error.pretty_format());
             panic!("failed to execute usrsctp build");
         }
     }
