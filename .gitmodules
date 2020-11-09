@@ -1,3 +1,0 @@
-[submodule "libsrtp"]
-	path = libsrtp
-	url = https://github.com/cisco/libsrtp
