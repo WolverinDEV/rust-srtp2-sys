@@ -11,9 +11,6 @@ fn main() {
         return;
     }
 
-    let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
-    let output_path = out_dir.join("srtp");
-
     let source = build_utils::source::BuildSourceGit::builder("https://github.com/cisco/libsrtp.git".to_owned())
         .revision(Some("7d351de".to_string()))
         .build();
@@ -23,7 +20,6 @@ fn main() {
 
     let mut build_builder = build_utils::Build::builder()
         .name("libsrtp2")
-        .install_prefix(output_path)
         .source(Box::new(source))
         .add_step(Box::new(meson));
 
